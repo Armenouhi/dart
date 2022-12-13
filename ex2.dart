@@ -7,7 +7,6 @@ void main(List<String> args) {
 void diagonal(int n) {
   var i;
   for (i = 0; i < n; i++) {
-   
     for (var k = i; k < n; k++) {
       stdout.write(" ");
     }
@@ -23,7 +22,7 @@ void diagonal(int n) {
     for (var k = i; k < n + 1; k++) {
       stdout.write(" ");
     }
-    for (var j = 2*i; j > 1; j--) {
+    for (var j = 2 * i; j > 1; j--) {
       stdout.write("*");
     }
     print("");
