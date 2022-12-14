@@ -35,7 +35,6 @@ gameHangman() {
         tF = false;
         print(word[i]);
         f += 1;
-     
         break;
       }
     }
