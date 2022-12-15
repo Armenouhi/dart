@@ -17,7 +17,8 @@ enum Months {
 }
 
 void main(List<String> args) {
-  print(birthday('friends.json'));
+  // print(birthday('friends.json'));
+  birthday('friends.json');
 }
 
 birthday(String fP) {
@@ -26,87 +27,90 @@ birthday(String fP) {
   Map<String, dynamic> data = json.decode(filePath.readAsStringSync());
   var friends = data.values.first;
   int index = 0;
-  String str = '';
+  String memberOfList = '';
+  List<String> birthdays = [];
+  int count = 0;
+  String key = '';
+  Map<String, String> monthsDays = {};
 
   for (var friend in friends) {
     if (friend['birthday'].contains('/')) {
-      index = friend['birthday'].indexOf('/') + 2;
+      index = friend['birthday'].indexOf('/');
       birthDay = friend['birthday'];
-      if (friend['birthday'].indexOf('/') + 1 == '0') {
-        
-        str = birthDay[index];
-        print(str);
+      if (birthDay[index + 1] == '0') {
+        memberOfList = '0${birthDay[index + 2]}';
+        birthdays.add(memberOfList);
       } else {
-        str = '1${birthDay[index]}';
-        print(str);
+        memberOfList = '1${birthDay[index + 2]}';
+        birthdays.add(memberOfList);
       }
     }
   }
 
-  print(birthDay[index]);
-
-  switch (str) {
-    case '2':
-      {
-        print(Months.February);
-      }
-      break;
-    case '3':
-      {
-        print(Months.March);
-      }
-      break;
-    case '4':
-      {
-        print(Months.April);
-      }
-      break;
-    case '5':
-      {
-        print(Months.May);
-      }
-      break;
-    case '6':
-      {
-        print(Months.June);
-      }
-      break;
-    case '7':
-      {
-        print(Months.July);
-      }
-      break;
-    case '8':
-      {
-        print(Months.August);
-      }
-      break;
-    case '9':
-      {
-        print(Months.September);
-      }
-      break;
-    case '10':
-      {
-        print(Months.October);
-      }
-      break;
-    case '11':
-      {
-        print(Months.November);
-      }
-      break;
-    case '12':
-      {
-        print(Months.December);
-      }
-      break;
-    default:
-      {
-        print(Months.January);
-      }
-      ;
+  for (var i = 0; i < birthdays.length; i++) {
+    if (birthdays[i] == '02') {
+      count++;
+      key = Months.February.toString();
+      monthsDays[key.substring(key.indexOf('.') + 1)] = '$count';
+    } else if (birthdays[i] == '03') {
+      count = 0;
+      count++;
+      key = Months.March.toString();
+      monthsDays[key.substring(key.indexOf('.') + 1)] = '$count';
+    } else if (birthdays[i] == '04') {
+      count = 0;
+      count++;
+      key = Months.April.toString();
+      monthsDays[key.substring(key.indexOf('.') + 1)] = '$count';
+    } else if (birthdays[i] == '05') {
+      count = 0;
+      count++;
+      key = Months.May.toString();
+      monthsDays[key.substring(key.indexOf('.') + 1)] = '$count';
+    } else if (birthdays[i] == '06') {
+      count = 0;
+      count++;
+      key = Months.June.toString();
+      monthsDays[key.substring(key.indexOf('.') + 1)] = '$count';
+    } else if (birthdays[i] == '07') {
+      count = 0;
+      count++;
+      key = Months.July.toString();
+      monthsDays[key.substring(key.indexOf('.') + 1)] = '$count';
+    } else if (birthdays[i] == '08') {
+      count = 0;
+      count++;
+      key = Months.August.toString();
+      monthsDays[key.substring(key.indexOf('.') + 1)] = '$count';
+    } else if (birthdays[i] == '09') {
+      count = 0;
+      count++;
+      key = Months.September.toString();
+      monthsDays[key.substring(key.indexOf('.') + 1)] = '$count';
+    } else if (birthdays[i] == '10') {
+      count = 0;
+      count++;
+      key = Months.October.toString();
+      monthsDays[key.substring(key.indexOf('.') + 1)] = '$count';
+    } else if (birthdays[i] == '11') {
+      count = 0;
+      count++;
+      key = Months.November.toString();
+      monthsDays[key.substring(key.indexOf('.') + 1)] = '$count';
+    } else if (birthdays[i] == '12') {
+      count = 0;
+      count++;
+      key = Months.December.toString();
+      monthsDays[key.substring(key.indexOf('.') + 1)] = '$count';
+    } else {
+      count = 0;
+      count++;
+      key = Months.January.toString();
+      monthsDays[key.substring(key.indexOf('.') + 1)] = '$count';
+    }
+    ;
   }
 
-  print(index);
+  print(monthsDays);
+  return monthsDays;
 }
