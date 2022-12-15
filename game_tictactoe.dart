@@ -1,63 +1,99 @@
 // typedef List<List<int>> list;
 void main(List<String> args) {
-  List<List<int>> game = [
-    [1, 2, 2],
-    [2, 1, 2],
-    [1, 1, 2]
+  List<List<String>> game = [
+    ['O', '0', 'O'],
+    ['0', 'O', 'X'],
+    ['O', '0', 'O']
   ];
-  ticTacToc(game);
+  // ticTacToc(game);
+  print(ticTacToc(game));
 }
 
-ticTacToc(List<List<int>> game) {
+ticTacToc(List<List<String>> game) {
+  int length = game.length;
   String message = '';
   int countRow = 0;
   int countColumn = 0;
   int diagonalLine = 0;
-  var i;
+  int seconDiagonalLine = 0;
   String player = '';
 
-  for (i = 0; i < game.length - 1; i++) {
-    // print(game[i]);
-    for (var j = 0; j < game[i].length - 1; j++) {
-      if (game[i][j] == 1) {
-        player = 'First player';
-      } else if (game[i][j] == 2) {
-        player = 'Second player';
-      } else {
-        player = '';
+  for (var i = 0; i < length; i++) {
+    for (var j = 0; j < length - 1; j++) {
+      if (game[i][j] == 'X') {
+        player = 'First';
+      } else if (game[i][j] == 'O') {
+        player = 'Second';
       }
 
-      if ((game[i][j] == game[i][j + 1] && game[i][j] != 0)) {
+      if ((game[i][j] == game[i][j + 1] && game[i][j] != '0')) {
         countRow++;
-        countColumn = 0;
-        diagonalLine = 0;
-      } else if (((game[i][j] == game[i + 1][j])) && game[i][j] != 0) {
-        countRow = 0;
-        diagonalLine = 0;
-        countColumn++;
-        // print(countColumn);
-      } else if ((game[i][j] == game[i + 1][j + 1]) && game[i][j] != 0) {
-        countRow = 0;
-        countColumn = 0;
-
-        diagonalLine++;
-        print(diagonalLine);
-      }
-
-      if (countRow == game[i].length - 1 ||
-          countColumn == game.length - i ||
-          diagonalLine == 1) {
-        message = 'The $player won!';
-        print(message);
-        countRow = 0;
-        countColumn = 0;
-        diagonalLine = 0;
-
-        return;
-      } else {
-        message = 'Nobody won!';
-        // return;
+        if (countRow == length - 1) {
+          message = 'The $player won!';
+          return message;
+        } else {
+          message = 'Nobody won!';
+        }
       }
     }
   }
+
+  for (var i = 0; i < length - 1; i++) {
+    for (var j = 0; j < length; j++) {
+      if (game[i + 1][j] == 'X') {
+        player = 'First';
+      } else if (game[i + 1][j] == 'O') {
+        player = 'Second';
+      }
+
+      if ((game[i][j] == game[i + 1][j] && game[i][j] != '0')) {
+        countColumn++;
+        if (countColumn == length - 1) {
+          message = 'The $player won!';
+          return message;
+        } else {
+          message = 'Nobody won!';
+        }
+      }
+    }
+  }
+
+  for (var i = 0; i < length - 1; i++) {
+    for (var j = 0; j < length - 1; j++) {
+      if (game[i + 1][j + 1] == 'X') {
+        player = 'First';
+      } else if (game[i + 1][j + 1] == 'O') {
+        player = 'Second';
+      }
+      if ((game[i][j] == game[i + 1][j + 1] && game[i][j] != '0')) {
+        diagonalLine++;
+        if (diagonalLine == length - 1) {
+          message = 'The $player won!';
+          return message;
+        } else {
+          message = 'Nobody won!';
+        }
+      }
+    }
+  }
+
+  for (var i = 0; i < length - 1; i++) {
+    for (var j = length - 1; j > 0; j--) {
+      if (game[i][j - 1] == 'X') {
+        player = 'First';
+      } else if (game[i][j - 1] == 'O') {
+        player = 'Second';
+      }
+      if ((game[i][j] == game[i + 1][j - 1] && game[i][j] != '0')) {
+        seconDiagonalLine++;
+        if (seconDiagonalLine == length - 1) {
+          message = 'The $player won!';
+          return message;
+        } else {
+          message = 'Nobody won!';
+        }
+      }
+    }
+  }
+  
 }

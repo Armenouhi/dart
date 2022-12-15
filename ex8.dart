@@ -21,24 +21,24 @@ createGame() {
   List<String> list = ['rock', 'scissors', 'paper'];
 
   while (true) {
-    String compChoice = list[random.nextInt(list.length)];
-    print(compChoice);
+    String text = list[random.nextInt(list.length)];
+    print(text);
     stdout.write("\nPlease choose Rock, Paper or Scissors: ");
-    String userChoice = stdin.readLineSync()!.toLowerCase();
+    String userText = stdin.readLineSync()!.toLowerCase();
 
-    if (userChoice == 'exit') {
-      print("\nYou: $user Computer: $comp\nBye Bye!");
+    if (userText == 'exit') {
+      print("\nYou: $user Computer: $comp");
       break;
     }
 
-    if (!list.contains(userChoice)) {
+    if (!list.contains(userText)) {
       print("Incorrect choice");
       continue;
-    } else if (compChoice == userChoice) {
+    } else if (text == userText) {
       print("We have a tie!");
-    } else if (rules['userChoice'] == compChoice) {
-      print("Computer wins: $compChoice vs $userChoice");
+    } else if (rules['userText'] == text) {
+      print("Computer wins: $text vs $userText");
       comp++;
-    } else if (rules['compChoice'] == userChoice) {}
+    } else if (rules['text'] == userText) {}
   }
 }
