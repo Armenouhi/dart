@@ -1,4 +1,4 @@
-import 'dart:ffi';
+
 import 'dart:io';
 
 void main(List<String> args) {
@@ -15,7 +15,6 @@ gameHangman() {
   int length = word!.length;
 
   while (true) {
-    bool tF = false;
     stdout.write("Please enter the letter: ");
     String? letter = stdin.readLineSync();
 
@@ -25,14 +24,12 @@ gameHangman() {
 
     for (var i = 0; i < word!.length; i++) {
       if (letter == word[i]) {
-        tF = true;
         t += 1;
         word = word.substring(1);
         print(word);
         print(t);
         break;
       } else {
-        tF = false;
         print(word[i]);
         f += 1;
         break;
