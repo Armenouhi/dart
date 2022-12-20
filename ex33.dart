@@ -1,12 +1,11 @@
 void main(List<String> args) {
-  List<int> list = [15, 26, 7, 4, 9, 19];
-  print(list.length - (list.length / 2).round());
+  List<int> list = [15, 26, 7, 4, 47, 11, 91, 19, 45, 74, 18];
 
-  // print(mergeSort(list));
-  mergeSort(list);
+  print(mergeSort(list));
+  // mergeSort(list);
 }
 
-mergeSort(List<int> list) {
+List<int> mergeSort(List<int> list) {
   int length = list.length;
 
   List<int> left = [], right = [];
@@ -14,45 +13,47 @@ mergeSort(List<int> list) {
   if (length > 1) {
     left = List.generate((length / 2).round(), (index) => list[index]);
     right = List.generate(
-        (length / 2).round(),
-        (index) => index >= list.length - (list.length / 2).round()
-            ? list[index]
-            : list.reversed.toList()[index],
-            growable: true);
+      length % 2 == 0 ? (length / 2).round() : ((length / 2).round() - 1),
+      (index) => list.reversed.toList()[index],
+    );
 
-    mergeSort(left);
-    mergeSort(right);
+    print(mergeSort(right));
 
-    // print(left);
-    // print(right);
+    return merge(mergeSort(left), mergeSort(right));
+  } else {
+    return list;
+  }
+}
 
-    int i = 0, j = 0, k = 0;
+merge(List<int> left, List<int> right) {
+  int i = 0, j = 0;
 
-    while (i < left.length && j < right.length) {
-      if (left[i] < right[j]) {
-        list[k] = left[i];
-        i++;
-      } else {
-        list[k] = right[j];
-        j++;
-      }
-      k++;
-    }
+  List<int> list = [];
 
-    while (i < left.length - 1) {
-      // print(left[i]);
-      list[k] = left[i];
+  while (i < left.length && j < right.length) {
+    if (left[i] < right[j]) {
+      list.add(left[i]);
       i++;
-      k++;
-    }
-
-    while (j < right.length) {
-      // print(right[j]);
-      list[k] = right[j];
+    } else if (left[i] > right[j]) {
+      list.add(right[j]);
       j++;
-      k++;
+    } else {
+      list.add(left[i]);
+      i++;
+      list.add(right[j]);
+      j++;
     }
   }
 
-  print(list);
+  while (i < left.length - 1) {
+    list.add(left[i]);
+    i++;
+  }
+
+  while (j < right.length) {
+    list.add(right[j]);
+    j++;
+  }
+
+  return list;
 }
