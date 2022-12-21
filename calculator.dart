@@ -37,11 +37,11 @@ num onCalculate() {
     if (regExp.hasMatch(y) == false) {
       y = '0';
     }
+    numbers.add(num.tryParse(y));
   } catch (e) {
     y = '0';
     print('It can\'t be null');
   }
-  numbers.add(num.tryParse(y));
 
   num? x = num.tryParse(firstNumber);
   int index = numbers.length - 1;
@@ -110,10 +110,10 @@ num onCalculate() {
         if (regExp.hasMatch(y) == false) {
           y = '0';
         }
+        numbers.add(num.tryParse(y)!);
       } catch (e) {
         print('It can\'t be null');
       }
-      numbers.add(num.tryParse(y)!);
     } else {
       print(operation);
       stdout.write('Click /    <--     enter    / or write "AC"');
