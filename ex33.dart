@@ -1,72 +1,91 @@
 import 'dart:io';
 
 void main(List<String> args) {
+  onCalculate();
+}
+
+num onCalculate() {
+  List<String?> arithmeticOperation = [];
+  List<num?> numbers = [];
   stdout.write('0 ');
-  String x = stdin.readLineSync()!;
+  String firstNumber = stdin.readLineSync()!;
 
   stdout.write('Enter operation ');
   String? operation = stdin.readLineSync();
-  stdout.write('$x $operation ');
+  arithmeticOperation.add(operation);
+  stdout.write('$firstNumber $operation ');
   String y = stdin.readLineSync()!;
+  numbers.add(num.tryParse(y));
 
-  onCalculate(num.tryParse(x), num.tryParse(y), operation);
-}
+  num? x = num.tryParse(firstNumber);
+  print(firstNumber);
+  print(numbers);
+  int index = numbers.length - 1;
 
-num onCalculate(num? x, num? y, String? arithmeticOperation) {
-  print(x);
-  print(y);
+  print(arithmeticOperation[index]);
+  print(numbers[index]);
 
-  num operation = 0;
+  num result = 0;
 
   if (x == null) {
     x = 0;
-  }
-  if (y == null) {
-    y = 0;
-  }
-
-  switch (arithmeticOperation) {
-    case '+':
-      operation = x + y;
-      break;
-
-    case '-':
-      operation = x - y;
-      break;
-
-    case '*':
-      operation = x * y;
-      break;
-
-    case '/':
-      operation = x / y;
-      break;
-
-    case '%':
-      operation = x % y;
-      break;
-
-    default:
-      operation = 0;
-      break;
+  } else {
+    result = x;
   }
 
-  print(operation);
+  print(result);
+
+  while (arithmeticOperation[arithmeticOperation.length - 1] != '=') {
+    switch (arithmeticOperation[index]) {
+      case '+':
+        result = result + numbers[index]!;
+        break;
+
+      case '-':
+        result = result - numbers[index]!;
+        break;
+
+      case '*':
+        result = result * numbers[index]!;
+        break;
+
+      case '/':
+        result = result / numbers[index]!;
+        break;
+
+      case '%':
+        result = result % numbers[index]!;
+        break;
+
+      case '=':
+        result = result;
+        break;
+
+      default:
+        result = 0;
+        break;
+    }
+
+    stdout.write('Enter operation ');
+    String? operation = stdin.readLineSync();
+    arithmeticOperation.add(operation!);
+
+    stdout.write('$result $operation');
+    String y = stdin.readLineSync()!;
+    numbers.add(num.tryParse(y)!);
+
+    index += 1;
+  }
 
   stdout.write('0 ');
   String? ac = stdin.readLineSync();
 
-  if (ac != '' || ac != null) {
+  if (ac != null || ac != '') {
     if (ac == 'AC') {
-      operation = 0;
-      print(operation);
-    } else {
-      if (ac == '=') {
-        operation = operation;
-        print(operation);
-      } 
+      result = 0;
+      print(result);
     }
   }
 
-  return operation;
+  return result;
 }
