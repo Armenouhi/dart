@@ -11,8 +11,19 @@ num onCalculate() {
   String firstNumber = stdin.readLineSync()!;
 
   stdout.write('Enter operation ');
-  String? operation = stdin.readLineSync();
-  arithmeticOperation.add(operation);
+  String operation = stdin.readLineSync()!;
+
+  if (operation == '+' ||
+      operation == '-' ||
+      operation == '*' ||
+      operation == '/' ||
+      operation == '%' ||
+      operation == '=') {
+    arithmeticOperation.add(operation);
+  } else {
+    operation = '+';
+    arithmeticOperation.add(operation);
+  }
 
   stdout.write('$firstNumber $operation ');
   String y = stdin.readLineSync()!;
@@ -20,8 +31,6 @@ num onCalculate() {
 
   num? x = num.tryParse(firstNumber);
   int index = numbers.length - 1;
-
-  print(arithmeticOperation[index]);
 
   num result = 0;
 
@@ -33,10 +42,6 @@ num onCalculate() {
 
   while (true) {
     switch (arithmeticOperation[index]) {
-      case '+':
-        result = result + numbers[index]!;
-        break;
-
       case '-':
         result = result - numbers[index]!;
         break;
@@ -59,7 +64,7 @@ num onCalculate() {
 
       default:
         arithmeticOperation[index] = '+';
-        result = 0;
+        result = result + numbers[index]!;
         break;
     }
 
@@ -73,15 +78,24 @@ num onCalculate() {
       write;
       operation;
 
-      arithmeticOperation.add(operation!);
-      print(arithmeticOperation[index]);
+      if (operation == '+' ||
+          operation == '-' ||
+          operation == '*' ||
+          operation == '/' ||
+          operation == '%' ||
+          operation == '=') {
+        arithmeticOperation.add(operation);
+      } else {
+        operation = '+';
+        arithmeticOperation.add(operation);
+      }
 
       stdout.write('$result $operation');
       String y = stdin.readLineSync()!;
       numbers.add(num.tryParse(y)!);
     } else {
-      stdout.write('Click Enter or write "AC"');
-      print(result);
+      print(operation);
+      stdout.write('Click /    <--     enter    / or write "AC"');
 
       String? ac = stdin.readLineSync();
 
