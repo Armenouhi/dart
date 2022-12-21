@@ -4,6 +4,7 @@ void main(List<String> args) {
   onCalculate();
 }
 
+final regExp = RegExp(r'^[0-9]+$');
 num onCalculate() {
   List<String?> arithmeticOperation = [];
   List<num?> numbers = [];
@@ -12,36 +13,16 @@ num onCalculate() {
 
   stdout.write('Enter operation ');
   String operation = stdin.readLineSync()!;
-  final regExp = RegExp(r'^[0-9]+$');
 
   if (regExp.hasMatch(firstNumber) == false) {
     firstNumber = '0';
   }
 
-  if (operation == '+' ||
-      operation == '-' ||
-      operation == '*' ||
-      operation == '/' ||
-      operation == '%' ||
-      operation == '=') {
-    arithmeticOperation.add(operation);
-  } else {
-    operation = '+';
-    arithmeticOperation.add(operation);
-  }
+  checkOperationType(operation, arithmeticOperation);
 
   stdout.write('$firstNumber $operation ');
   String? y;
-  try {
-    y = stdin.readLineSync() ?? stdin.readLineSync()!;
-    if (regExp.hasMatch(y) == false) {
-      y = '0';
-    }
-    numbers.add(num.tryParse(y));
-  } catch (e) {
-    y = '0';
-    print('It can\'t be null');
-  }
+  addNumbers(y, numbers);
 
   num? x = num.tryParse(firstNumber);
   int index = numbers.length - 1;
@@ -92,28 +73,11 @@ num onCalculate() {
       write;
       operation;
 
-      if (operation == '+' ||
-          operation == '-' ||
-          operation == '*' ||
-          operation == '/' ||
-          operation == '%' ||
-          operation == '=') {
-        arithmeticOperation.add(operation);
-      } else {
-        operation = '+';
-        arithmeticOperation.add(operation);
-      }
+      checkOperationType(operation, arithmeticOperation);
 
       stdout.write('$result $operation');
-      try {
-        String y = stdin.readLineSync() ?? stdin.readLineSync()!;
-        if (regExp.hasMatch(y) == false) {
-          y = '0';
-        }
-        numbers.add(num.tryParse(y)!);
-      } catch (e) {
-        print('It can\'t be null');
-      }
+      String? y;
+      addNumbers(y, numbers);
     } else {
       print(operation);
       stdout.write('Click /    <--     enter    / or write "AC"');
@@ -134,4 +98,36 @@ num onCalculate() {
 
     index += 1;
   }
+}
+
+List<String?> checkOperationType(
+    String? operation, List<String?> arithmeticOperation) {
+  if (operation == '+' ||
+      operation == '-' ||
+      operation == '*' ||
+      operation == '/' ||
+      operation == '%' ||
+      operation == '=') {
+    arithmeticOperation.add(operation);
+  } else {
+    operation = '+';
+    arithmeticOperation.add(operation);
+  }
+
+  return arithmeticOperation;
+}
+
+List<num?> addNumbers(String? y, List<num?> numbers) {
+  try {
+    y = stdin.readLineSync() ?? stdin.readLineSync()!;
+    if (regExp.hasMatch(y) == false) {
+      y = '0';
+    }
+    numbers.add(num.tryParse(y));
+  } catch (e) {
+    y = '0';
+    print('It can\'t be null');
+  }
+
+  return numbers;
 }
