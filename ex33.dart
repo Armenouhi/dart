@@ -12,6 +12,11 @@ num onCalculate() {
 
   stdout.write('Enter operation ');
   String operation = stdin.readLineSync()!;
+  final regExp = RegExp(r'^[0-9]+$');
+
+  if (regExp.hasMatch(firstNumber) == false) {
+    firstNumber = '0';
+  }
 
   if (operation == '+' ||
       operation == '-' ||
@@ -26,7 +31,16 @@ num onCalculate() {
   }
 
   stdout.write('$firstNumber $operation ');
-  String y = stdin.readLineSync()!;
+  String? y;
+  try {
+    y = stdin.readLineSync() ?? stdin.readLineSync()!;
+    if (regExp.hasMatch(y) == false) {
+      y = '0';
+    }
+  } catch (e) {
+    y = '0';
+    print('It can\'t be null');
+  }
   numbers.add(num.tryParse(y));
 
   num? x = num.tryParse(firstNumber);
@@ -91,7 +105,14 @@ num onCalculate() {
       }
 
       stdout.write('$result $operation');
-      String y = stdin.readLineSync()!;
+      try {
+        String y = stdin.readLineSync() ?? stdin.readLineSync()!;
+        if (regExp.hasMatch(y) == false) {
+          y = '0';
+        }
+      } catch (e) {
+        print('It can\'t be null');
+      }
       numbers.add(num.tryParse(y)!);
     } else {
       print(operation);
