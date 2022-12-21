@@ -13,17 +13,15 @@ num onCalculate() {
   stdout.write('Enter operation ');
   String? operation = stdin.readLineSync();
   arithmeticOperation.add(operation);
+
   stdout.write('$firstNumber $operation ');
   String y = stdin.readLineSync()!;
   numbers.add(num.tryParse(y));
 
   num? x = num.tryParse(firstNumber);
-  print(firstNumber);
-  print(numbers);
   int index = numbers.length - 1;
 
   print(arithmeticOperation[index]);
-  print(numbers[index]);
 
   num result = 0;
 
@@ -33,9 +31,7 @@ num onCalculate() {
     result = x;
   }
 
-  print(result);
-
-  while (arithmeticOperation[arithmeticOperation.length - 1] != '=') {
+  while (true) {
     switch (arithmeticOperation[index]) {
       case '+':
         result = result + numbers[index]!;
@@ -62,30 +58,45 @@ num onCalculate() {
         break;
 
       default:
+        arithmeticOperation[index] = '+';
         result = 0;
         break;
     }
 
-    stdout.write('Enter operation ');
-    String? operation = stdin.readLineSync();
-    arithmeticOperation.add(operation!);
+    var write = arithmeticOperation[index] != '='
+        ? stdout.write('Enter operation ')
+        : '';
+    String? operation =
+        arithmeticOperation[index] != '=' ? stdin.readLineSync() : ' <-- enter';
 
-    stdout.write('$result $operation');
-    String y = stdin.readLineSync()!;
-    numbers.add(num.tryParse(y)!);
+    if (arithmeticOperation[index] != '=') {
+      write;
+      operation;
+
+      arithmeticOperation.add(operation!);
+      print(arithmeticOperation[index]);
+
+      stdout.write('$result $operation');
+      String y = stdin.readLineSync()!;
+      numbers.add(num.tryParse(y)!);
+    } else {
+      stdout.write('Click Enter or write "AC"');
+      print(result);
+
+      String? ac = stdin.readLineSync();
+
+      if (ac != null) {
+        if (ac == 'AC') {
+          result = 0;
+          print(result);
+          return result;
+        } else {
+          print(result);
+          return result;
+        }
+      }
+    }
 
     index += 1;
   }
-
-  stdout.write('0 ');
-  String? ac = stdin.readLineSync();
-
-  if (ac != null || ac != '') {
-    if (ac == 'AC') {
-      result = 0;
-      print(result);
-    }
-  }
-
-  return result;
 }
