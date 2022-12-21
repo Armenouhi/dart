@@ -1,33 +1,23 @@
-import 'dart:math';
-
 void main(List<String> args) {
-  List<int> list = [15, 26, 7, 4];
+  List<int> list = [15, 7, 26, 4, 19, 47, 14];
 
   print(mergeSort(list));
 }
 
 List<int> mergeSort(List<int> list) {
-  Random random = new Random();
-
   int length = list.length;
-  int lengthLeftList = length > 3 ? random.nextInt(length - 2) : 1;
-  print(lengthLeftList);
-  int lengthRightList = length - lengthLeftList;
-  print(lengthRightList);
+  int mid = (length / 2).round();
 
   if (list.length <= 1) {
     return list;
   }
 
   List<int> left = [], right = [];
-  left = List.generate(lengthLeftList, (index) => list[index]);
-  print(left);
-
-  right =
-      List.generate(lengthRightList, (index) => list.reversed.toList()[index]);
-  print(right);
-
-  // return [];
+  left = List.generate(mid, (index) => list[index]);
+  // print(left);
+  right = List.generate(length % 2 == 0 ? mid : mid - 1,
+      (index) => list.reversed.toList()[index]);
+  // print(right);
 
   return merge(mergeSort(left), mergeSort(right));
 }
@@ -49,13 +39,12 @@ merge(List<int> left, List<int> right) {
   while (i < left.length) {
     result.add(left[i]);
     i++;
-  }
+  } 
 
   while (j < right.length) {
     result.add(right[j]);
     j++;
   }
 
- 
   return result;
 }
