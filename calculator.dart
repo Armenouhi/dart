@@ -50,7 +50,7 @@ num onCalculate() {
 
       case '/':
         isDevide = false;
-        result = result / numbers[index]!;
+        result = numbers[index]! != 0 ? result / numbers[index]! : result;
         break;
 
       case '%':
