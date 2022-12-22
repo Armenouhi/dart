@@ -5,6 +5,7 @@ void main(List<String> args) {
 }
 
 final regExp = RegExp(r'^[0-9]+$');
+final regExpD = RegExp(r'(^\d*\.?\d*)');
 bool isDevide = true;
 num onCalculate() {
   List<String?> arithmeticOperation = [];
@@ -15,7 +16,8 @@ num onCalculate() {
   stdout.write('Enter operation ');
   String operation = stdin.readLineSync()!;
 
-  if (regExp.hasMatch(firstNumber) == false) {
+  if (regExp.hasMatch(firstNumber) == false &&
+      regExpD.hasMatch(firstNumber) == false) {
     firstNumber = '0';
   }
 
@@ -130,7 +132,7 @@ List<String?> checkOperationType(
 List<num?> addNumbers(String? y, List<num?> numbers) {
   try {
     y = stdin.readLineSync() ?? stdin.readLineSync()!;
-    if (regExp.hasMatch(y) == false) {
+    if (regExp.hasMatch(y) == false && regExpD.hasMatch(y) == false) {
       y = '0';
     }
     numbers.add(num.tryParse(y));
