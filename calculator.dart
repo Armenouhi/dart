@@ -5,6 +5,7 @@ void main(List<String> args) {
 }
 
 final regExp = RegExp(r'^[0-9]+$');
+bool isDevide = true;
 num onCalculate() {
   List<String?> arithmeticOperation = [];
   List<num?> numbers = [];
@@ -38,18 +39,22 @@ num onCalculate() {
   while (true) {
     switch (arithmeticOperation[index]) {
       case '-':
+        isDevide = true;
         result = result - numbers[index]!;
         break;
 
       case '*':
+        isDevide = true;
         result = result * numbers[index]!;
         break;
 
       case '/':
+        isDevide = false;
         result = result / numbers[index]!;
         break;
 
       case '%':
+        isDevide = true;
         result = result % numbers[index]!;
         break;
 
@@ -58,6 +63,7 @@ num onCalculate() {
         break;
 
       default:
+        isDevide = true;
         arithmeticOperation[index] = '+';
         result = result + numbers[index]!;
         break;
@@ -102,16 +108,20 @@ num onCalculate() {
 
 List<String?> checkOperationType(
     String? operation, List<String?> arithmeticOperation) {
-  if (operation == '+' ||
-      operation == '-' ||
-      operation == '*' ||
-      operation == '/' ||
-      operation == '%' ||
-      operation == '=') {
-    arithmeticOperation.add(operation);
+  if (operation!.length == 1) {
+    if (operation == '+' ||
+        operation == '-' ||
+        operation == '*' ||
+        operation == '/' ||
+        operation == '%' ||
+        operation == '=') {
+      arithmeticOperation.add(operation);
+    } else {
+      operation = '+';
+      arithmeticOperation.add(operation);
+    }
   } else {
-    operation = '+';
-    arithmeticOperation.add(operation);
+    arithmeticOperation.add(operation[0]);
   }
 
   return arithmeticOperation;
@@ -125,7 +135,7 @@ List<num?> addNumbers(String? y, List<num?> numbers) {
     }
     numbers.add(num.tryParse(y));
   } catch (e) {
-    y = '0';
+    y = isDevide == true ? '0' : '1';
     print('It can\'t be null');
   }
 
